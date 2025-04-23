@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            text-align: center;
+            background: linear-gradient(to right, #4F46E5, #6366F1);
+            color: white;
+            font-weight: bold;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #4338CA, #4F46E5);
+            transform: scale(1.05);
+        }
+
+        .btn-try-on {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-try-on:hover {
+            background: linear-gradient(to right, #ff6a5b, #fea947);
+            transform: scale(1.05);
+        }
+
+        .gender-options {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .gender-option-button {
+            display: inline-block;
+            padding: 10px;
+            background-color: #4F46E5;
+            color: white;
+            margin: 4px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .gender-option-button:hover {
+            background-color: #4338CA;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 shadow-lg">
+        <div class="container mx-auto flex items-center justify-between px-4">
+            <a href="/home/" class="text-white text-lg font-semibold hover:underline">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <h1 class="text-center text-3xl font-bold flex-1">🛒 Product List</h1>
+
+            <!-- Try On Button -->
+            <a href="/try_on_page/" class="btn-try-on">
+                <i class="fas fa-camera"></i> Try On
+            </a>
+        </div>
+    </header>
+
+    <!-- Search and Filter Section -->
+    <div class="container mx-auto my-4 p-4 bg-white rounded-lg shadow-md">
+        <div class="flex flex-col sm:flex-row gap-4">
+            <input type="text" id="searchInput" placeholder="Search by product name, category, description, or size..." class="w-full sm:w-2/3 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+            <div class="dropdown w-full sm:w-1/3 p-2">
+                <select id="filterSelect" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="all">All</option>
+                    <option value="category">Category</option>
+                    <option value="price">Price</option>
+                    <option value="status">Status</option>
+                    <option value="size">Size</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Gender Buttons -->
+        <div class="gender-options mt-4">
+            <button class="gender-option-button" id="maleOption">Male</button>
+            <button class="gender-option-button" id="femaleOption">Female</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto my-8 p-6">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {% for product in gt %}
+            <div class="bg-white product-card rounded-xl shadow-md p-5" data-category="{{ product.get_category_display }}" data-gender="{{ product.gender }}" data-price="{{ product.price }}" data-status="{{ product.get_status_display }}" data-size="{{ product.size }}">
+                <!-- Product Image -->
+                <img 
+                    src="{{ product.image.url }}" 
+                    alt="{{ product.productname }}" 
+                    class="h-48 w-full object-cover rounded-lg"
+                    onerror="this.src='https://via.placeholder.com/200';"
+                >
+
+                <!-- Product Details -->
+                <h2 class="mt-4 text-xl font-bold text-gray-800">{{ product.productname }}</h2>
+                <p class="text-sm text-gray-500">📦 Category: <span class="font-medium">{{ product.get_category_display }}</span></p>
+                <p class="text-sm text-gray-500">📦 Gender: <span class="font-medium">{{ product.gender }}</span></p>
+                <p class="text-lg text-indigo-600 font-bold mt-2">💰 Price: ₹{{ product.price }}</p>
+                <p class="text-sm text-gray-600 mt-2">📏 Size: <span class="font-medium">{{ product.size }}</span></p>
+                <p class="text-sm text-gray-600 mt-2">📦 Stock: <span class="font-medium">{{ product.stock }}</span></p>
+                <p class="text-sm text-gray-600 mt-2">📌 Status: <span class="font-medium">{{ product.get_status_display }}</span></p>
+                <p class="text-sm text-gray-700 mt-2 truncate">📝 {{ product.description }}</p>
+                <p class="text-xs text-gray-400 mt-2">🔖 Product ID: {{ product.product_id }}</p>
+
+                <!-- Add to Cart Button -->
+                <div class="mt-4 flex items-center justify-center">
+                    <a href="{% url 'add_cart' product.id %}" class="btn-primary w-full text-center">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center">
+                <p class="text-gray-500 text-lg font-medium">No products found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white text-center py-4">
+        <p class="text-sm">© 2024 Your Shop. All Rights Reserved.</p>
+    </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const filterSelect = document.getElementById('filterSelect');
+        const productGrid = document.getElementById('productGrid');
+        const products = Array.from(productGrid.getElementsByClassName('product-card'));
+        const maleOption = document.getElementById('maleOption');
+        const femaleOption = document.getElementById('femaleOption');
+
+        maleOption.addEventListener('click', function() {
+            filterByGender('male');
+        });
+
+        femaleOption.addEventListener('click', function() {
+            filterByGender('female');
+        });
+
+        function filterByGender(gender) {
+            products.forEach(product => {
+                const productGender = product.getAttribute('data-gender').toLowerCase();
+                if (productGender === gender) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        function filterProducts() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filterType = filterSelect.value;
+
+            products.forEach(product => {
+                const productName = product.querySelector('h2').textContent.toLowerCase();
+                const category = product.getAttribute('data-category').toLowerCase();
+                const gender = product.getAttribute('data-gender').toLowerCase();
+                const price = product.getAttribute('data-price').toLowerCase();
+                const status = product.getAttribute('data-status').toLowerCase();
+                const size = product.getAttribute('data-size').toLowerCase();
+                const description = product.querySelector('p.text-gray-700').textContent.toLowerCase();
+
+                let matchesSearch = false;
+
+                if (filterType === 'all') {
+                    matchesSearch = productName.includes(searchTerm) ||
+                                   category.includes(searchTerm) ||
+                                   gender.includes(searchTerm) ||
+                                   price.includes(searchTerm) ||
+                                   status.includes(searchTerm) ||
+                                   size.includes(searchTerm) ||
+                                   description.includes(searchTerm);
+                } else if (filterType === 'category') {
+                    matchesSearch = category.includes(searchTerm);
+                } else if (filterType === 'price') {
+                    matchesSearch = price.includes(searchTerm);
+                } else if (filterType === 'status') {
+                    matchesSearch = status.includes(searchTerm);
+                } else if (filterType === 'size') {
+                    matchesSearch = size.includes(searchTerm);
+                }
+
+                if (matchesSearch) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        searchInput.addEventListener('input', filterProducts);
+        filterSelect.addEventListener('change', filterProducts);
+    });
+</script>
+
+</body>
+</html>

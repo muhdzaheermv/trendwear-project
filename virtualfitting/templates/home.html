@@ -1,0 +1,291 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Yoga Studio Template">
+    <meta name="keywords" content="Yoga, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Violet | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <style>
+    .semi-bold {
+        font-weight: 600; /* Semi-bold weight */
+        font-size: 28px;  /* Increase font size */
+    }
+    
+    </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    
+    <!-- Search model -->
+	<div class="search-model">
+		<div class="h-100 d-flex align-items-center justify-content-center">
+			<div class="search-close-switch">+</div>
+			<form class="search-model-form">
+				<input type="text" id="search-input" placeholder="Search here.....">
+			</form>
+		</div>
+	</div>
+	<!-- Search model end -->
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <div class="container-fluid">
+            <div class="inner-header">
+                <div class="logo">
+                    <p class="semi-bold">TREND WEAR</p>
+                </div>
+                <div class="header-right">
+                    <!-- <img src="{% static 'img/icons/search.png' %}" alt="" class="search-trigger"> -->
+                    <a href="/profile/"><img src="{% static 'img/icons/man.png' %}" alt=""></a>
+                    
+                    <a href="/user_cart/" style="margin-left: 10px;">
+                        <img src="{% static 'img/icons/bag.png' %}" alt=""></a>
+                        
+                        
+                    
+                </div>
+                <!-- <div class="user-access">
+                    <a href="/register/">Register</a>
+                    <a href="/login/" class="in">Sign in</a>
+                </div> -->
+                <nav class="main-menu mobile-menu">
+                    <ul>
+                        <li><a href="/my-orders/">My orders</a></li>
+                        <li><a href="/try_on_page/">Try On</a></li>
+                        <li><a href="/productlist/">Product Page</a></li>
+                        <li><a href="/logout/">Logout</a></li>
+                            {% comment %} <ul class="sub-menu">
+                                <li><a href="/productlist/">Product Page</a></li>
+                                <!-- <li><a href="shopping-cart.html">Shopping Card</a></li>
+                                <li><a href="check-out.html">Check out</a></li> -->
+                            </ul> {% endcomment %}
+                        </li>
+                        <!-- <li><a href="./product-page.html">About</a></li>
+                        <li><a href="./check-out.html">Blog</a></li>
+                        <li><a href="./contact.html">Contact</a></li> -->
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Header Info Begin -->
+    <div class="header-info">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="header-item">
+                        <img src="{% static 'img/icons/delivery.png' %}" alt="">
+                        <p>Virtual Try on</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-left text-lg-center">
+                    <div class="header-item">
+                        <img src="{% static 'img/icons/voucher.png' %}" alt="">
+                        <p>New trending fashion</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-left text-xl-right">
+                    <div class="header-item">
+                    <img src="{% static 'img/icons/sales.png' %}" alt="">
+                    <p>100% Trustable</p>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header Info End -->
+    <!-- Header End -->
+
+    <!-- Hero Slider Begin -->
+    <section class="hero-slider">
+        <div class="hero-items owl-carousel">
+            <div class="single-slider-item set-bg" data-setbg="{% static 'img/slider-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1>2025</h1>
+                            <h2>FASHION.</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-slider-item set-bg" data-setbg="{% static 'img/slider-2.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1>2025</h1>
+                            <h2>FASHION.</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="single-slider-item set-bg" data-setbg="{% static 'img/slider-3.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1>2025</h1>
+                            <h2>FASHION.</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Slider End -->
+
+    <!-- Features Section Begin -->
+    <section class="features-section spad">
+        <<section class="features-section spad">
+            <div class="features-ads">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="single-features-ads first">
+                                <img src="{% static 'img/icons/f-delivery.png' %}" alt="">
+                                <h4>Virtual try on</h4>
+                                <p>you can Virtually try on the dresses before buying </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="single-features-ads second">
+                                <img src="{% static 'img/icons/coin.png' %}" alt="">
+                                <h4>100% trustable </h4>
+                                <p>Shop with confidence on our trusted e-commerce platform, where quality, security, and customer satisfaction are our top priorities! </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="single-features-ads">
+                                <img src="{% static 'img/icons/chat.png' %}" alt="">
+                                <h4>Online support 24/7 in Instagram</h4>
+                                <p>Enjoy a seamless shopping experience with secure payments, top-quality products, and 24/7 customer support in instagram—your satisfaction is our priority! </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Features Box -->
+        
+    <!-- Logo Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section spad">
+        <div class="container">
+            <div class="newslatter-form">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="#">
+                            <!-- <input type="text" placeholder="Your email address">
+                            <button type="submit">Subscribe to our newsletter</button> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-widget">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h4>About us</h4>
+                            <ul>
+                                <li>Affordable</li>
+                                <li>Stylish</li>
+                                <li>fashion</li>
+                                <li>Virtual try on</li>
+                                <li>ornaments</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h4>Customer Care</h4>
+                            <ul>
+                                <li>Trusted</li>
+                                <li>Privacy Policy</li>
+                                <li>Support</li>
+                                <li>Satisfaction</li>
+                                <li>Available</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h4>Our Services</h4>
+                            <ul>
+                                <li>24*7 in instagram</li>
+                                <li>Customer Support</li>
+                                <li>Secure</li>
+                                <li>Terms and conditions</li>
+                                <li>User-Friendly</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h4>Information</h4>
+                            <ul>
+                                <li>Payment methods</li>
+                                <li>Transparent</li>
+                                <li>Product quality</li>
+                                <li>Trustworthy</li>
+                                <li>Conformity of the products</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="social-links-warp">
+			<div class="container">
+				<div class="social-links">
+                    <a href="https://www.instagram.com/p/DFcIasCzSNW/?igsh=aG4wbjh5ZGZ1ZHY=" class="instagram"><i class="fa fa-instagram"></i><span>TREND WEAR</span></a>
+					<a href="https://www.instagram.com/unnniforever?igsh=MXFodHg4MG83cno1ag==" class="instagram"><i class="fa fa-instagram"></i><span>UNNI KANNAN</span></a>
+					<a href="https://www.instagram.com/_.n__a__z__r__i__n._?igsh=MTFjajRzNzBodG11ZQ==" class="instagram"><i class="fa fa-instagram"></i><span>NASRIEN</span></a>
+					<a href="https://www.instagram.com/itshashiqui?igsh=MW00dW55ZjFycGxnYg==" class="instagram"><i class="fa fa-instagram"></i><span>HASHIQ</span></a>
+                    <a href="https://www.instagram.com/so.urav0?igsh=eWJ0ZnF3bHYzcGFw" class="instagram"><i class="fa fa-instagram"></i><span>SOURAV</span></a>
+				</div>
+			</div>
+
+<div class="container text-center pt-5">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    &copy;<script>document(new Date().getFullYear());</script> OUR DEVELOPERS & SOCIAL MEDIA PLATFORMS <i class="icon-heart color-danger" aria-hidden="true"></i>  <a href="https://colorlib.com" target="_blank"></a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+
+
+		</div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

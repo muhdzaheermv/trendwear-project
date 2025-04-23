@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function previewImage(event) {
+            const image = document.getElementById('preview-image');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Show image after upload
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="flex justify-center items-center h-screen">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+            <h1 class="text-2xl font-semibold text-center mb-4">Upload Image</h1>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Image Upload -->
+                <div class="mb-4">
+                    <label for="image" class="block text-sm font-medium text-gray-700">Choose an image to upload:</label>
+                    <input type="file" name="image" id="image" class="mt-1 block w-full text-sm text-gray-800 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" onchange="previewImage(event)" />
+                </div>
+
+                <!-- Image Preview -->
+                <div class="mb-4">
+                    <img id="preview-image" src="#" alt="Image Preview" class="w-full h-auto rounded-md hidden mt-4" />
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                    Upload Image
+                </button>
+            </form>
+
+            <p class="mt-4 text-center">
+                <a href="/home/" class="text-blue-500 hover:underline">Back to Home</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

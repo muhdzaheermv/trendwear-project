@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Try-On</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Card Hover Effect */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            background: linear-gradient(to right, #4F46E5, #6366F1);
+            color: white;
+            font-weight: bold;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(to right, #4338CA, #4F46E5);
+            transform: scale(1.05);
+        }
+
+        /* Back to Home Button */
+        .btn-home {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            font-weight: bold;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-home:hover {
+            background: linear-gradient(to right, #ff6a5b, #fea947);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-8 font-sans">
+
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-4xl font-extrabold text-center text-gray-800 flex-grow">🎭 Virtual Try-On Experience</h1>
+            <a href="/home/" class="btn-home px-4 py-2 text-center">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+
+        {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 shadow-md" role="alert">
+            <p class="font-bold">⚠️ Error:</p>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        {% if not selected_product %}
+        <!-- Product Selection Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {% for product in products %}
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden card p-4">
+                <img src="{{ product.image.url }}" alt="{{ product.productname }}" 
+                     class="w-full h-64 object-cover rounded-md">
+                <div class="p-4">
+                    <h3 class="text-2xl font-semibold mb-2 text-gray-800">{{ product.productname }}</h3>
+                    <p class="text-gray-500 mb-2">📦 {{ product.get_category_display }}</p>
+                    <p class="text-xl font-bold text-indigo-600 mb-4">💰 ₹{{ product.price }}</p>
+                    <a href="?product_id={{ product.product_id }}" 
+                       class="btn-primary block w-full text-center py-2">
+                        👓 Try This On
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Try-On Form -->
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-xl p-6">
+            <div class="mb-6">
+                <img src="{{ selected_product.image.url }}" alt="{{ selected_product.productname }}" 
+                     class="w-full h-64 object-cover rounded-lg">
+                <h2 class="text-2xl font-semibold mt-4 text-gray-800">{{ selected_product.productname }}</h2>
+                <p class="text-gray-500">📦 {{ selected_product.get_category_display }}</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="space-y-6">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ selected_product.product_id }}">
+                
+                <div>
+                    <label for="avatar_image" class="block text-gray-700 font-medium mb-2">
+                        📸 Upload Your Photo
+                    </label>
+                    <input type="file" name="avatar_image" id="avatar_image" accept="image/*" required
+                           class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-400">
+                </div>
+
+                <div class="flex justify-between">
+                    <a href="{% url 'try_on_page' %}" 
+                       class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                        ⬅️ Back
+                    </a>
+                    <button type="submit" class="btn-primary px-6 py-2">
+                        ✨ Generate Try-On
+                    </button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

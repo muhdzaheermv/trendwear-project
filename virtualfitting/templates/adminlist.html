@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Product List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-100 to-gray-300 py-10">
+    <div class="container mx-auto px-6 bg-white shadow-2xl rounded-lg p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-extrabold text-gray-700">Product List</h1>
+            <a href="/adminindex/" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition">Back</a>
+        </div>
+        <table class="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden border border-gray-300">
+            <thead class="bg-blue-500 text-white">
+                <tr>
+                    <th class="px-4 py-3 text-left">#</th>
+                    <th class="px-4 py-3 text-left">Product Name</th>
+                    <th class="px-4 py-3 text-left">Category</th>
+                    <th class="px-4 py-3 text-left">Price</th>
+                    <th class="px-4 py-3 text-left">Size</th>
+                    <th class="px-4 py-3 text-left">Description</th>
+                    <th class="px-4 py-3 text-left">Image</th>
+                    <th class="px-4 py-3 text-left">Created At</th>
+                    <th class="px-4 py-3 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in ht %}
+                <tr class="border-t hover:bg-blue-100 transition">
+                    <td class="px-4 py-3">{{ forloop.counter }}</td>
+                    <td class="px-4 py-3">{{ product.productname }}</td>
+                    <td class="px-4 py-3 capitalize">{{ product.category }}</td>
+                    <td class="px-4 py-3">${{ product.price }}</td>
+                    <td class="px-4 py-3">{{ product.size }}</td>
+                    <td class="px-4 py-3">{{ product.description }}</td>
+                    <td class="px-4 py-3">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.productname }}" class="w-16 h-16 object-cover rounded-md shadow-md">
+                        {% else %}
+                        <span class="text-gray-400">No Image</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3">{{ product.created_at }}</td>
+                    <td class="px-4 py-3">
+                        <form method="POST" action="{% url 'deleteproduct' product.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="bg-red-500 text-white px-3 py-2 rounded-lg shadow-md hover:bg-red-700 transition">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" class="px-4 py-6 text-center text-gray-500 font-semibold">No products found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

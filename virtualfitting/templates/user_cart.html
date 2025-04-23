@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+
+    <style>
+        /* General styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Styling for the container that holds the cart content */
+        .cart-container {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Heading styling */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Styling for images inside the table */
+        img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Buttons styling */
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Total price styling */
+        .total-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* General button styling */
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Hover effect for buttons */
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Remove button styling */
+        .remove-btn {
+            color: red;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Hover effect for remove button */
+        .remove-btn:hover {
+            color: darkred;
+        }
+
+        /* Styling for the 'Buy Now' button */
+        .buy-now-btn {
+            background-color: #2196F3;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Hover effect for 'Buy Now' button */
+        .buy-now-btn:hover {
+            background-color: #1976D2;
+        }
+
+        /* Back to products button styling */
+        .cart-container a.btn {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            background-color: #ff5722;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .cart-container a.btn:hover {
+            background-color: #e64a19;
+        }
+
+        /* Responsive design: If the screen width is small, stack elements */
+        @media screen and (max-width: 768px) {
+            .cart-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            table,
+            th,
+            td {
+                font-size: 14px;
+            }
+
+            .buy-now-btn,
+            .remove-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+
+        {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                    <th>Buy Now</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <input type="hidden" name="cid" class="cid" value="{{ item.id }}">
+                    <input type="hidden" name="amount" class="amount" value="{{ item.total }}">
+                    <td>{{ item.product.name }}</td>
+                    <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}"></td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.total }}</td>
+                    <td><a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">Remove</a></td>
+                    <td>
+                        <!-- The Buy Now button will trigger Razorpay payment -->
+                        <button class="buy-now-btn pay-button" data-id="{{ item.id }}"
+                            data-amount="{{ item.total }}">Buy Now</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-actions">
+            <div class="total-price">
+                <p>Total: ₹{{ total_price }}</p>
+            </div>
+        </div>
+
+        {% else %}
+        <p>Your cart is empty.</p>
+        {% endif %}
+
+        <div>
+            <a href="{% url 'productlist' %}" class="btn">Back to Products</a>
+        </div>
+    </div>
+<!-- 
+     Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.querySelectorAll('.pay-button').forEach(button => {
+            button.addEventListener('click', function (e) {
+                const itemId = button.getAttribute('data-id');
+                const amount = button.getAttribute('data-amount');
+
+                if (!amount || amount <= 0) {
+                    alert('Invalid amount');
+                    return;
+                }
+
+                // Fetch Razorpay order details from backend
+                fetch(`/initiate_payment/${itemId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const orderId = data.order_id;
+                        const options = {
+                            "key": "{{ settings.RAZOR_KEY_ID }}",  // Razorpay API Key
+                            "amount": data.amount,  // Amount in paise
+                            "currency": "INR",
+                            "name": "Your Store Name",
+                            "description": "Product Purchase",
+                            "order_id": orderId,
+                            "handler": function (response) {
+                                // On success, confirm payment and redirect
+                                window.location.href = `/confirm-payment/${orderId}/${response.razorpay_payment_id}/${itemId}/`;
+                            },
+                            "prefill": {
+                                "name": data.buyer.name,
+                                "email": data.buyer.email,
+                                "contact": data.buyer.phone
+                            },
+                            "theme": {
+                                "color": "#3399cc"
+                            }
+                        };
+
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    })
+                    .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to initiate payment. Please try again later.');
+});
+            });
+        });
+    </script>
+
+</body>
+
+</html> 

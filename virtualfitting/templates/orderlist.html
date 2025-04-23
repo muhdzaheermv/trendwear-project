@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-semibold text-center mb-6">Order List</h1>
+
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">Order ID</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">User</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">Products</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">Payment Status</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">Order Date</th>
+                        <th class="py-2 px-4 text-left text-sm font-medium text-gray-600">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    {% for order in od %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="py-2 px-4 text-sm text-gray-700">{{ order.id }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-700">{{ order.user.username }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-700">
+                            {% for product in order.products.all %}
+                                <span class="text-gray-600">{{ product.name }}</span>
+                                {% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="py-2 px-4 text-sm text-gray-700">
+                            {% if order.payment_success %}
+                                <span class="text-green-500">Paid</span>
+                            {% else %}
+                                <span class="text-red-500">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-2 px-4 text-sm text-gray-700">{{ order.order_date|date:"Y-m-d H:i" }}</td>
+                        <td class="py-2 px-4 text-sm text-gray-700">
+                            <span class="px-2 py-1 rounded-full text-white 
+                                {% if order.order_status == 'pending' %} bg-yellow-500
+                                {% elif order.order_status == 'completed' %} bg-green-500
+                                {% else %} bg-red-500 {% endif %}
+                            ">
+                                {{ order.order_status|capfirst }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="py-4 px-4 text-center text-gray-500">No orders found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Back to Home Button -->
+        <div class="flex justify-center mt-6">
+            <a href="/shophome/" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-md shadow-md hover:bg-blue-700 transition duration-300">
+                ⬅ Back to Home
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

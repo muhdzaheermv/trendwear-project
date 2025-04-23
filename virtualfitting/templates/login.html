@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Add Google Font (Didot) -->
+  <link href="https://fonts.googleapis.com/css2?family=Didot&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <!-- Updated Font for Heading -->
+    <h1 class="text-2xl font-bold text-center mb-6" style="font-family: 'Didot', serif;">Login Form</h1>
+
+    <!-- Display error message -->
+    {% if error %}
+      <p class="text-red-500 text-center mb-4">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      <input type="email" name="email" placeholder="Email or Phone" required class="w-full p-3 bg-gray-50 text-black border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 rounded-md">
+      
+      <input type="password" name="password" placeholder="Password" required class="w-full p-3 bg-gray-50 text-black border-b-2 border-gray-300 focus:outline-none focus:border-blue-500 rounded-md">
+      
+      <div class="text-left">
+        <!-- <a href="#" class="text-blue-400 hover:text-blue-500">Forgot Password?</a> -->
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Login</button>
+    </form>
+
+    <div class="mt-4 text-center">
+      
+  
+
+
+
+
+    <div class="mt-4 text-center">
+      <div class="text-sm text-gray-600">
+        Don't have an account? <a href="/register/" class="text-blue-400 hover:text-blue-500">Sign up Now</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="container">
+    <div class="content">
+      <img src="https://res.cloudinary.com/debbsefe/image/upload/f_auto,c_fill,dpr_auto,e_grayscale/image_fz7n7w.webp" alt="header-image" class="cld-responsive">
+      <h1 class="form-title">Register Here</h1>
+      <form id="registrationForm" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <input type="text" placeholder="SHOPNAME" name="shopname" required>
+          <input type="text" placeholder="SHOPID" name="shopid" required><br>
+          <input type="tel" placeholder="PHONENUMBER" name="phone_number" required><br>
+          <input type="text" placeholder="SHOPADDRESS" name="shopaddress" required><br>
+          <input type="text" placeholder="PLACE" name="place" required><br>
+          <input type="email" placeholder="EMAIL ADDRESS" name="email" required><br> 
+          <input type="file" placeholder="SHOPIMAGE" name="shopimage" required><br> 
+          <input type="password" placeholder="PASSWORD" name="password" id="password" required>
+          <input type="password" placeholder="CONFIRM PASSWORD" name="confirmpassword" id="confirmpassword" required><br>
+          
+          <!-- Error message container -->
+          <div id="error-message" style="color: red; display: none; text-align: center;"></div>
+
+          {% if error %}
+          <div style='text-align:center'>
+              <p style='color:red'>{{error}}</p>
+          </div>
+          {% endif %}
+          
+          <input type="text" placeholder="LICENCENO" name="licenceno" required><br>
+          <input type="text" placeholder="SHOPOWNERNAME" name="shopownername" required><br>
+          <input type="text" placeholder="AGE" name="age" required><br>
+          <input type="text" placeholder="ADDRESS" name="address" required><br>
+          <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <style> 
+  html, body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color:#008cba; 
+      height:100%;
+      margin: 0;
+      padding: 0;
+  }
+  .container{ 
+     height:100%;
+     display:flex;
+     align-items:center;
+     justify-content:center;
+  }
+  .content{
+      background-color:white;
+      width:500px;
+      min-height:500px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+  }
+  img{
+      width: 100%;
+      height: 25%;
+      border-radius: 8px 8px 0 0;
+  }
+  .form-title{
+      padding:10px 40px 0;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+  }
+  form{
+      padding: 0px 40px;
+      display: flex;
+      flex-direction: column;
+  }
+  input, select{
+      border: none;
+      border-bottom: 1px solid black;
+      outline: none;
+      width: 100%;
+      margin: 8px 0;
+      padding: 10px 0;
+      font-size: 16px;
+  }
+  input:hover, select:hover {
+      background-color: #f5f5f5;
+  }
+  .beside{
+      display: flex;  
+      justify-content: space-between;
+  }
+  .beside input, .beside select{
+      width: 48%;
+  }
+  button{
+      color: #ffffff;
+      background-color: #4caf50;
+      height: 40px;
+      width: 100%;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+      text-align: center;
+      font-size: 16px;
+      transition-duration: 0.4s;
+  }
+  button:hover{
+      background-color: #333333;
+  }
+  </style>
+
+  <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        // Get the password and confirm password fields
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmpassword').value;
+        const errorMessage = document.getElementById('error-message');
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            event.preventDefault(); // Prevent form submission
+            errorMessage.style.display = 'block'; // Show error message
+            errorMessage.innerText = 'Passwords do not match. Please try again.'; // Set the error message
+        } else {
+            errorMessage.style.display = 'none'; // Hide the error message if passwords match
+        }
+    });
+  </script>
+</body>
+</html>

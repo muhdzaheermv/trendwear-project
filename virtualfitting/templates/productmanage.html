@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Products</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white py-4 shadow-md">
+        <h1 class="text-center text-2xl font-bold">Manage Products</h1>
+    </header>
+
+    <main class="container mx-auto my-8 p-4">
+        <div class="flex justify-end mb-4">
+            <a href="/addproduct/" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Add New Product
+            </a>
+        
+            <a href="/shophome/" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">
+                Back to home
+            </a>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for product in gt %}
+            <div class="bg-white rounded-lg shadow-md p-4">
+                <img 
+                    src="{{ product.image.url }}" 
+                    alt="{{ product.productname }}" 
+                    class="h-40 w-full object-cover rounded-lg"
+                    onerror="this.src='https://via.placeholder.com/150';"
+                >
+                <h2 class="mt-4 text-lg font-semibold">{{ product.productname }}</h2>
+                <p class="text-sm text-gray-500">Category: {{ product.get_category_display }}</p>
+                <p class="text-gray-700 font-bold mt-2">Price: ₹{{ product.price }}</p>
+                <p class="text-sm text-gray-600 mt-2">Size: {{ product.size }}</p>
+                <p class="text-sm text-gray-600 mt-2">{{ product.description }}</p>
+                <p class="text-xs text-gray-400 mt-2">Added on: {{ product.created_at }}</p>
+                <p class="text-sm text-gray-600 mt-2">Stock: {{ product.stock }}</p>
+                <p class="text-sm text-gray-600 mt-2">Status: {{ product.status }}</p>
+                <p class="text-xs text-gray-400 mt-2">Product ID: {{ product.product_id }}</p>
+                <div class="mt-4 flex justify-between space-x-2">
+                    <a 
+                        href="/productedit/{{ product.id }}/" 
+                        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded text-center w-full">
+                        Edit
+                    </a>
+                    <form action="/delete/{{ product.id }}/" method="POST" class="w-full">
+                        {% csrf_token %}
+                        <button 
+                            type="submit" 
+                            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded text-center w-full">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center">
+                <p class="text-gray-500">No products found.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p class="text-sm">© 2024 Your Shop. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

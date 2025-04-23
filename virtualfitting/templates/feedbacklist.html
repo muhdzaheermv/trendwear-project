@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-6">
+    <header class="w-full bg-blue-600 text-white py-4 shadow-md">
+        <h1 class="text-center text-3xl font-bold">Feedback List</h1>
+    </header>
+    <main class="w-full max-w-6xl mt-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Customer Feedback</h2>
+            <table class="table-auto w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr class="bg-gray-200 text-left">
+                        <th class="border border-gray-300 px-4 py-2">Product Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Name</th>
+                        <th class="border border-gray-300 px-4 py-2">Email</th>
+                        <th class="border border-gray-300 px-4 py-2">Feedback</th>
+                        <th class="border border-gray-300 px-4 py-2">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feedback in feed %}
+                    <tr class="odd:bg-white even:bg-gray-100">
+                        <td class="border border-gray-300 px-4 py-2">{{ feedback.transaction.products.productname }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ feedback.name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ feedback.email }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ feedback.feedback }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ feedback.rating }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="mt-4 flex justify-center">
+                <a href="/adminindex/" class="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-200">
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

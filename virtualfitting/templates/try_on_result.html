@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Try-On Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <h1 class="text-2xl font-bold p-6 border-b">Virtual Try-On Result</h1>
+            
+            {% if result_image %}
+            <div class="p-6">
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold mb-2">Original Product</h2>
+                    <div class="flex items-center space-x-4">
+                        <img src="{{ product.image.url }}" alt="{{ product.productname }}" 
+                             class="w-32 h-32 object-cover rounded">
+                        <div>
+                            <h3 class="font-semibold">{{ product.productname }}</h3>
+                            <p class="text-gray-600">{{ product.get_category_display }}</p>
+                            <p class="text-lg font-bold">₹{{ product.price }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h2 class="text-lg font-semibold mb-2">Try-On Result</h2>
+                    <img src="{{ result_image }}" alt="Try-on result" 
+                         class="w-full rounded-lg shadow">
+                </div>
+
+                <div class="flex justify-between">
+                    <a href="{% url 'try_on_page' %}" 
+                       class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        Try Another
+                    </a>
+                    <a href="{% url 'plist' %}" 
+                       class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                        View Suggestions
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="p-6 text-center">
+                <p class="text-red-500 mb-4">Error generating try-on result</p>
+                <a href="{% url 'try_on_page' %}" 
+                   class="inline-block bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                    Try Again
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

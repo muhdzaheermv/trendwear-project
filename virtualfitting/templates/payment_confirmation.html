@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Confirmation</title>
+</head>
+<body>
+    <h2>Thank you for your purchase, {{ user_name }}!</h2>
+    
+    <h3>Order Details:</h3>
+    <p>Order ID: {{ order_id }}</p>
+    <p>Product: {{ product_name }}</p>
+    <p>Quantity: {{ quantity }}</p>
+    <p>Amount: ₹{{ amount }}</p>
+    {% if transaction_date %}
+    <p>Transaction Date: {{ transaction_date }}</p>
+    {% endif %}
+    
+    <p>If you have any questions about your order, please contact our support team.</p>
+</body>
+</html>

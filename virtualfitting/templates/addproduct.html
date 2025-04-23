@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
+        <h1 class="text-2xl font-bold text-center mb-6">Add New Product</h1>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            {% for i in messages %}
+            {{i}}
+            {% endfor%}
+
+            <div>
+                <label for="productname" class="block text-sm font-medium text-gray-700">Product Name:</label>
+                <input type="text" id="productname" name="productname" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            </div>
+
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">gender</label>
+                <select id="category" name="gender" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    <option value="tshirt">Male</option>
+                    <option value="shirt">Female</option>
+                    
+                </select>
+            </div>
+
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">Category:</label>
+                <select id="category" name="category" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    <option value="tshirt">T-shirt</option>
+                    <option value="shirt">Shirt</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="westernwear">Westernwear</option>
+                    <option value="watch">Watch</option>
+                    <option value="glass">Glass</option>
+                    <option value="cap">Cap</option>
+                    <option value="casualwear">Casualwear</option>
+                    <option value="jewellery">Jewellery</option>
+                    <option value="coat">Coat</option>
+                    <option value="gown">Gown</option>
+            
+                </select>
+            </div>
+
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700">Price:</label>
+                <input type="text" id="price" name="price" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            </div>
+
+            <div>
+                <label for="size" class="block text-sm font-medium text-gray-700">Size:</label>
+                <input type="text" id="size" name="size" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Description:</label>
+                <textarea id="description" name="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required></textarea>
+            </div>
+
+            <div>
+                <label for="shopimage" class="block text-sm font-medium text-gray-700">Product Image:</label>
+                <input type="file" id="shopimage" name="image" accept="image/*" class="mt-1 block w-full text-gray-700 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label for="stock" class="block text-sm font-medium text-gray-700">Stock:</label>
+                <input type="number" id="stock" name="stock" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            </div>
+
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700">Status:</label>
+                <select id="status" name="status" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    <option value="available">Available</option>
+                    <option value="out_of_stock">Out of Stock</option>
+                </select>
+            </div>
+
+            <!-- <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+                <input type="email" id="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+            </div> -->
+
+            <div class="text-center">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Add Product</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
